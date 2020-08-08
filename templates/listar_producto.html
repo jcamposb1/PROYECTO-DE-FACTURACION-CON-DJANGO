@@ -1,0 +1,88 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ menu }}</title>
+    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light"><label><h1>{{ menu }}</h1></label></nav>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">Menu</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto" style="color: #ffffff;">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'clientes' %}">Clientes</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'productos' %}">Productos</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'ventas' %}">Ventas</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<br>
+
+<div class="container-fluid">
+    <br>
+    <a class="btn btn-success" href="{% url 'agregarProducto' %}">Agregar Nuevo</a>
+    <br>
+    <h1>Listado de {{ modulo }}</h1>
+    <table class="table table-hover table-bordered">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Descripción</th>
+            <th>Precio</th>
+            <th>Stock</th>
+            <th>¿Iva?</th>
+            <th>Acción</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for l in listado %}
+            <tr>
+                <td>
+                    {{ l.pk }}
+                </td>
+                <td>
+                    {{ l.descripcion }}
+                </td>
+                <td>
+                    {{ l.precio }}
+                </td>
+                <td>
+                    {{ l.stock }}
+                </td>
+                <td>
+                    {% if l.iva == True %}
+                        <a class="badge badge-success" style="color: #ffffff; font-size: 15px">Con Iva</a>
+                    {% else %}
+                        <a class="badge badge-danger" style="color: #ffffff; font-size: 15px">Sin Iva</a>
+                    {% endif %}
+                </td>
+                <td>
+                    <ul>
+                        <l1><a class="btn btn-primary" href="{% url 'editarProducto' l.id %}">Modifcar</a></l1>
+                        <l1><a class="btn btn-danger" href="{% url 'eliminarProducto' l.id %}">Eliminar</a></l1>
+
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+
+</body>
+<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+</html>
